@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحفيظ أونلاين | Tahfeez Online</title>
+    <meta name="description" content="منصة تحفيظ أونلاين لتعليم القرآن الكريم وتصحيح التلاوة وإعطاء الإجازات بالسند المتصل للنساء والأطفال أونلاين.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700;800&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ==========================================
+           1. CSS VARIABLES & RESET
+        ========================================== */
+        :root {
+            --primary-emerald: #064E3B;
+            --primary-dark-emerald: #022C22;
+            --secondary-navy: #0F172A;
+            --gold-primary: #D4AF37;
+            --gold-light: #F3E5AB;
+            --gold-dark: #AA7C11;
+            --text-light: #F8FAFC;
+            --text-muted: #94A3B8;
+            --glass-bg: rgba(15, 23, 42, 0.78);
+            --glass-border: rgba(212, 175, 55, 0.3);
+            --glass-hover: rgba(6, 78, 59, 0.65);
+            --font-arabic-heading: 'Amiri', serif;
+            --font-arabic-body: 'Cairo', sans-serif;
+            --font-english: 'Poppins', sans-serif;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-arabic-body);
+            background-color: var(--secondary-navy);
+            color: var(--text-light);
+            overflow-x: hidden;
+            line-height: 1.7;
+            position: relative;
+        }
+
+        body[dir="ltr"] {
+            font-family: var(--font-english);
+        }
+
+        /* Ambient Islamic Pattern Overlay */
+        .pattern-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.07;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"><g fill="none" stroke="%23D4AF37" stroke-width="1"><path d="M60 0 L120 60 L60 120 L0 60 Z"/><path d="M60 15 L105 60 L60 105 L15 60 Z"/><rect x="30" y="30" width="60" height="60"/><rect x="30" y="30" width="60" height="60" transform="rotate(45 60 60)"/><circle cx="60" cy="60" r="25"/><circle cx="60" cy="60" r="10"/><path d="M0 0 L120 120 M120 0 L0 120"/></g></svg>');
+            background-repeat: repeat;
+        }
+
+        /* Static Background Watermark */
+        .background-watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: var(--font-arabic-heading);
+            font-size: min(12vw, 110px);
+            font-weight: 700;
+            color: transparent;
+            -webkit-text-stroke: 1.5px rgba(212, 175, 55, 0.12);
+            text-align: center;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 0;
+            user-select: none;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ==========================================
+           2. HEADER & NAVIGATION
+        ========================================== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: var(--transition);
+            padding: 18px 0;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        header.scrolled {
+            padding: 12px 0;
+            background: rgba(2, 44, 34, 0.95);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-light);
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-dark-emerald);
+            font-size: 1.5rem;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .logo-text h1 {
+            font-family: var(--font-arabic-heading);
+            font-size: 1.6rem;
+            color: var(--gold-light);
+            line-height: 1.1;
+        }
+
+        .logo-text span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: block;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--gold-primary);
+        }
+
+        .lang-switch {
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-light);
+            padding: 6px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lang-switch:hover {
+            background: var(--gold-primary);
+            color: var(--secondary-navy);
+        }
+
+        /* ==========================================
+           3. HERO SECTION
+        ========================================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 130px;
+            padding-bottom: 60px;
+            position: relative;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .hero-title-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--gold-primary);
+            border-radius: 30px;
+            color: var(--gold-light);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .hero-content h2 {
+            font-family: var(--font-arabic-heading);
+            font-size: 3.2rem;
+            line-height: 1.3;
+            color: #FFF;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.6);
+        }
+
+        .hero-content h2 span {
+            color: var(--gold-primary);
+            background: linear-gradient(135deg, var(--gold-light), var(--gold-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 30px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: #FFF;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-3px);
+            background: #20ba5a;
+        }
+
+        .btn-telegram {
+            background: #0088cc;
+            color: #FFF;
+            box-shadow: 0 10px 25px rgba(0, 136, 204, 0.3);
+        }
+
+        .btn-telegram:hover {
+            transform: translateY(-3px);
+            background: #0077b5;
+        }
+
+        .hero-card-glass {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 30px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .bio-badge {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .bio-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 2px solid var(--gold-primary);
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23D4AF37"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>') center/cover;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 10px;
+            text-align: start;
+        }
+
+        .pricing-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pricing-features li i {
+            color: var(--gold-primary);
+        }
+
+        /* ==========================================
+           4. SECTIONS COMMON STYLES
+        ========================================== */
+        .section-padding {
+            padding: 90px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h3 {
+            font-family: var(--font-arabic-heading);
+            font-size: 2.5rem;
+            color: var(--gold-light);
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 35px 25px;
+            transition: var(--transition);
+            backdrop-filter: blur(12px);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            background: var(--glass-hover);
+            border-color: var(--gold-primary);
+        }
+
+        .card-icon {
+            width: 65px;
+            height: 65px;
+            background: rgba(212, 175, 55, 0.15);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--gold-primary);
+            margin-bottom: 20px;
+            border: 1px solid var(--glass-border);
+        }
+
+        /* ==========================================
+           5. STEPS SECTION
+        ========================================== */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .step-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            backdrop-filter: blur(12px);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--gold-primary);
+            color: var(--secondary-navy);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            margin: 0 auto 20px auto;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .step-card h4 {
+            color: var(--gold-light);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .step-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* ==========================================
+           6. PLAYLIST SECTION
+        ========================================== */
+        .playlist-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .audio-track-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            backdrop-filter: blur(12px);
+            transition: var(--transition);
+        }
+
+        .audio-track-card:hover {
+            border-color: var(--gold-primary);
+            background: rgba(6, 78, 59, 0.4);
+        }
+
+        .track-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-grow: 1;
+        }
+
+        .track-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.2);
+            color: var(--gold-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .track-details h4 {
+            font-size: 1.05rem;
+            color: #FFF;
+        }
+
+        .track-details span {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .track-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            min-width: 220px;
+        }
+
+        .play-btn-small {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--gold-primary);
+            color: var(--secondary-navy);
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .play-btn-small:hover {
+            transform: scale(1.1);
+            background: var(--gold-light);
+        }
+
+        .track-progress {
+            flex-grow: 1;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .track-progress-fill {
+            height: 100%;
+            background: var(--gold-primary);
+            width: 0%;
+            border-radius: 10px;
+        }
+
+        /* ==========================================
+           7. TESTIMONIALS SECTION
+        ========================================== */
+        .testimonial-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            backdrop-filter: blur(12px);
+        }
+
+        .testimonial-stars {
+            color: var(--gold-primary);
+            margin-bottom: 15px;
+        }
+
+        .testimonial-text {
+            color: var(--text-light);
+            font-style: italic;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .author-info h5 {
+            color: var(--gold-light);
+            font-size: 1rem;
+        }
+
+        .author-info span {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* ==========================================
+           8. FAQ SECTION
+        ========================================== */
+        .faq-accordion {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .faq-item {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            color: var(--text-muted);
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 20px 20px 20px;
+            max-height: 200px;
+        }
+
+        /* ==========================================
+           9. FLOATING BUTTON & FOOTER
+        ========================================== */
+        .floating-whatsapp {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #25D366;
+            color: #FFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.5);
+            z-index: 999;
+            text-decoration: none;
+            animation: pulse 2s infinite;
+        }
+
+        body[dir="ltr"] .floating-whatsapp {
+            right: auto;
+            left: 30px;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        footer {
+            background: rgba(2, 44, 34, 0.95);
+            border-top: 1px solid var(--glass-border);
+            padding: 40px 0 20px 0;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--gold-primary);
+        }
+
+        @media (max-width: 992px) {
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero-content p { margin: 0 auto 30px auto; }
+            .cta-group { justify-content: center; }
+            .bio-badge { justify-content: center; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-content h2 { font-size: 2.2rem; }
+            .audio-track-card { flex-direction: column; align-items: stretch; }
+            .track-controls { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Islamic Decorative Ambient Background -->
+    <div class="pattern-overlay"></div>
+
+    <!-- Static Background Watermark Text -->
+    <div class="background-watermark" id="bgWatermark"></div>
+
+    <!-- HEADER / NAVIGATION -->
+    <header id="header">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon"><i class="fa-solid fa-book-quran"></i></div>
+                <div class="logo-text">
+                    <h1 id="logoTitle"></h1>
+                    <span id="logoSub"></span>
+                </div>
+            </a>
+
+            <ul class="nav-links" id="navLinks"></ul>
+
+            <button class="lang-switch" onclick="toggleLanguage()">
+                <i class="fa-solid fa-globe"></i>
+                <span id="langLabel">English</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <span class="hero-title-badge" id="heroBadge"></span>
+                <h2 id="heroTitle"></h2>
+                <p id="heroDesc"></p>
+                <div class="cta-group">
+                    <a href="#" target="_blank" class="btn btn-whatsapp js-wa-link">
+                        <i class="fa-brands fa-whatsapp"></i> <span class="js-cta-btn-text"></span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Hero Glass Bio Card -->
+            <div class="hero-card-glass" id="about">
+                <div class="bio-badge">
+                    <div class="bio-avatar"></div>
+                    <div>
+                        <h4 style="color: var(--gold-light);" id="bioName"></h4>
+                        <span style="color: var(--text-muted); font-size: 0.85rem;" id="bioSub"></span>
+                    </div>
+                </div>
+                <hr style="border-color: var(--glass-border); margin-bottom: 15px;">
+                <ul class="pricing-features" id="bioFeatures"></ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY CHOOSE US SECTION -->
+    <section class="section-padding" id="why-us" style="background: rgba(6, 78, 59, 0.1);">
+        <div class="container">
+            <div class="section-title">
+                <h3 id="whyUsTitle"></h3>
+                <p id="whyUsSub"></p>
+            </div>
+            <div class="cards-grid" id="whyUsGrid"></div>
+        </div>
+    </section>
+
+    <!-- SERVICES & PROGRAMS SECTION -->
+    <section class="section-padding" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h3 id="servicesTitle"></h3>
+                <p id="servicesSub"></p>
+            </div>
+            <div class="cards-grid" id="servicesGrid"></div>
+        </div>
+    </section>
+
+    <!-- STEPS TO START SECTION -->
+    <section class="section-padding" id="steps" style="background: rgba(6, 78, 59, 0.15);">
+        <div class="container">
+            <div class="section-title">
+                <h3 id="stepsTitle"></h3>
+                <p id="stepsSub"></p>
+            </div>
+            <div class="steps-grid" id="stepsGrid"></div>
+        </div>
+    </section>
+
+    <!-- RECITATION PLAYLIST SECTION -->
+    <section class="section-padding" id="playlist">
+        <div class="container">
+            <div class="section-title">
+                <h3 id="playlistTitle"></h3>
+                <p id="playlistSub"></p>
+            </div>
+            <div class="playlist-container" id="playlistContainer"></div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS SECTION -->
+    <section class="section-padding" id="testimonials" style="background: rgba(6, 78, 59, 0.1);">
+        <div class="container">
+            <div class="section-title">
+                <h3 id="testimonialsTitle"></h3>
+                <p id="testimonialsSub"></p>
+            </div>
+            <div class="cards-grid" id="testimonialsGrid"></div>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="section-padding" id="faq">
+        <div class="container">
+            <div class="section-title">
+                <h3 id="faqTitle"></h3>
+                <p id="faqSub"></p>
+            </div>
+            <div class="faq-accordion" id="faqAccordion"></div>
+        </div>
+    </section>
+
+    <!-- FLOATING WHATSAPP BUTTON -->
+    <a href="#" target="_blank" class="floating-whatsapp js-wa-link" title="تواصل مباشرة عبر واتساب">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="cta-group" style="justify-content: center; margin-bottom: 30px;">
+                <a href="#" target="_blank" class="btn btn-whatsapp js-wa-link">
+                    <i class="fa-brands fa-whatsapp"></i> <span class="js-cta-btn-text"></span>
+                </a>
+                <a href="#" target="_blank" class="btn btn-telegram js-tg-link">
+                    <i class="fa-brands fa-telegram"></i> <span id="footerTgText"></span>
+                </a>
+            </div>
+            <div class="footer-links">
+                <a href="#" target="_blank" class="js-wa-link"><i class="fa-brands fa-whatsapp"></i> <span id="footerWaText"></span></a>
+                <a href="#" target="_blank" class="js-tg-link"><i class="fa-brands fa-telegram"></i> Telegram</a>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">
+                &copy; 2026 <span id="footerCopyright"></span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- JS Database & Logic Link -->
+    <script src="content.js"></script>
+</body>
+</html>
