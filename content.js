@@ -127,7 +127,7 @@ const siteData = {
 
     // قسم نماذج التلاوات (Playlist)
     playlist: {
-        title: { ar: "نماذج كبار القراء والمنشدين", en: "Famous Reciters Samples" },
+        title: { ar: "نماذج من تلاوات الطلاب", en: "Famous Reciters Samples" },
         subtitle: { ar: "استمع إلى نماذج لتلاوات مجودة بخامات صوتية متنوعة وأحكام إتقان ممتازة", en: "Listen to recitation samples from renowned reciters" },
         tracks: [
             {
