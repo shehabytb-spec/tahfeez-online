@@ -8,7 +8,7 @@ const siteData = {
     contact: {
         whatsappNumber: "201004675704",
         whatsappMessage: "السلام عليكمُ، أرغب في حجز حصة تجريبية مجانية عبر موقع تحفيظ أونلاين",
-        telegramLink: "https://t.me/201004675704?text=" + encodeURIComponent("السلام عليكم، أرغب في حجز حصة تجريبية مجانية عبر موقع تحفيظ أونلاين"),
+        telegramLink: "https://t.me/mohfza?text=" + encodeURIComponent("السلام عليكم، أرغب في حجز حصة تجريبية مجانية عبر موقع تحفيظ أونلاين"),
     },
 
     // الهيدر والقائمة العلوية
