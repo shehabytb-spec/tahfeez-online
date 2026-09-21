@@ -1,6 +1,5 @@
 /* ==========================================================================
    قاعدة بيانات محتوى الموقع (Site Content Database)
-   يمكنك تعديل أي نص أو رابط أو إضافة عناصر جديدة بسهولة من هنا
    ========================================================================== */
 
 const siteData = {
@@ -8,7 +7,7 @@ const siteData = {
     contact: {
         whatsappNumber: "201004675704",
         whatsappMessage: "السلام عليكمُ، أرغب في حجز حصة تجريبية مجانية عبر موقع تحفيظ أونلاين",
-        telegramLink: "https://t.me/mohfza?text=" + encodeURIComponent("السلام عليكم، أرغب في حجز حصة تجريبية مجانية عبر موقع تحفيظ أونلاين"),
+        telegramLink: "https://t.me/+201004675704"
     },
 
     // الهيدر والقائمة العلوية
@@ -19,6 +18,7 @@ const siteData = {
             { id: "about", text: { ar: "عن المعلمة", en: "About" } },
             { id: "why-us", text: { ar: "مميزات المنصة", en: "Why Us" } },
             { id: "services", text: { ar: "البرامج", en: "Programs" } },
+            { id: "packages", text: { ar: "باقات الحصص", en: "Packages" } },
             { id: "steps", text: { ar: "خطوات البدء", en: "How to Start" } },
             { id: "playlist", text: { ar: "نماذج التلاوات", en: "Recitations" } },
             { id: "testimonials", text: { ar: "آراء الطالبات", en: "Reviews" } },
@@ -28,14 +28,14 @@ const siteData = {
 
     // قسم الواجهة (Hero Section)
     hero: {
-        badge: { ar: "✨ جلسات فردية خاصة عبر الزوم والتليجرام", en: "✨ 1-on-1 Private Live Classes" },
+        badge: { ar: "✨ جلسات فردية خاصة عبر جوجل ميت والتليجرام", en: "✨ 1-on-1 Private Live Classes" },
         title: { 
             ar: "تعلم القرآن الكريم في منصة <span>تحفيظ أونلاين</span>", 
             en: "Learn Quran Online with <span>Tahfeez Online</span>" 
         },
         description: { 
-            ar: "أكاديمية متخصصة للنساء والأطفال لتعليم التلاوة الصحيحة، حفظ كتاب الله، ودراسة أحكام التجويد على يد محفظة معتمدة ومجازة بالسند المتصل.", 
-            en: "Specialized academy for women and children. Learn Quran recitation, memorization, and Tajweed with certified tutors." 
+            ar: "أكاديمية متخصصة للنساء والأطفال لتعليم التلاوة الصحيحة، وتدريس أحكام التجويد، وتحفيظ كتاب الله تعالى على يد محفظة أزهرية.", 
+            en: "A specialized academy for women and children to teach correct recitation, Tajweed rules, and the memorization of the Holy Quran under the guidance of a female Al-Azhar certified tutor." 
         },
         ctaButton: { ar: "احجز حصة تجريبية مجانية", en: "Book Free Trial Class" },
         
@@ -44,8 +44,8 @@ const siteData = {
             name: { ar: "الشيخة / معلّمة التلاوة", en: "Certified Quran Tutor" },
             subtitle: { ar: "معلمة القرآن والتجويد بالمنصة", en: "Quran & Tajweed Instructor" },
             features: [
-                { icon: "fa-certificate", text: { ar: "حاصلة على إجازة بالسند المتصل برواية حفص عن عاصم", en: "Certified Ijazah with Connected Chain of Narration" } },
-                { icon: "fa-clock", text: { ar: "خبرة أكثر من 7 سنوات في التدريس أونلاين", en: "7+ Years of Online Teaching Experience" } },
+                { icon: "fa-certificate", text: { ar: "حاصلة على ليسانس الدراسات الإسلامية والعربية شعبة أصول الدين", en: "Certified Ijazah with Connected Chain of Narration" } },
+                { icon: "fa-clock", text: { ar: "خبرة أكثر من 20 سنة في التدريس المباشر والتحفيظ أونلاين", en: "7+ Years of Online Teaching Experience" } },
                 { icon: "fa-child-reaching", text: { ar: "متخصصة في التعامل مع الأطفال والنساء فقط", en: "Specialized for Women & Children" } }
             ]
         }
@@ -74,7 +74,7 @@ const siteData = {
         ]
     },
 
-    // قسم البرامج التعليمية (Services)
+    // قسم البرامج التعليمية (Services - مع تعديل البرنامج الأخير لدورة تصحيح التلاوة وتجويد الحروف)
     services: {
         title: { ar: "برامجنا التعليمية", en: "Our Educational Programs" },
         subtitle: { ar: "خطط دراسية مخصصة تناسب كافة المستويات والأعمار", en: "Customized study plans designed for all ages and levels" },
@@ -90,9 +90,53 @@ const siteData = {
                 desc: { ar: "حلقات فردية خاصة للنساء لضبط التلاوة، تصحيح المخارج، وحفظ السور مع شرح أحكام التجويد بطريقة سهلة.", en: "Private 1-on-1 sessions for women focusing on Tajweed rules, memorization, and accurate recitation." }
             },
             {
-                icon: "fa-scroll",
-                title: { ar: "دورة الإجازة بالسند المتصل", en: "Ijazah Certification Course" },
-                desc: { ar: "إعداد الطالبة لختم القرآن الكريم كاملاً بقراءة متقنة والحصول على إجازة مسندة للرسول ﷺ.", en: "Complete Quran recitation review leading to an authentic Ijazah linked to Prophet Muhammad ﷺ." }
+                icon: "fa-book-open-reader",
+                title: { ar: "دورة تصحيح التلاوة وتجويد الحروف", en: "Correct Recitation & Tajweed Rules Course" },
+                desc: { ar: "تدريب مكثف على مخارج الحروف وصفاتها، وتصحيح الأخطاء الشائعة في التلاوة، وإتقان أحكام التجويد التطبيقي.", en: "Intensive training on letter articulation, correcting common recitation errors, and mastering applied Tajweed rules." }
+            }
+        ]
+    },
+
+    // قسم باقات الحصص الشهرية (Packages)
+    packages: {
+        title: { ar: "باقات الحصص الشهرية", en: "Monthly Class Packages" },
+        subtitle: { ar: "اختر الباقة المناسبة لك أو لطفلك لاستمرارية حفظ كتاب الله بانتظام", en: "Choose the right package for consistent Quran memorization" },
+        items: [
+            {
+                title: { ar: "الباقة الأساسية", en: "Basic Package" },
+                price: { ar: "٤ حصص", en: "4 Classes" },
+                priceSub: { ar: "شهرياً (حصة أسبوعياً)", en: "Per Month (1 class/week)" },
+                features: [
+                    { ar: "مدة الحصة: 30 دقيقة", en: "Class Duration: 30 mins" },
+                    { ar: "متابعة فردية خاصة", en: "Private 1-on-1 Session" },
+                    { ar: "تقرير شهري للمستوى", en: "Monthly Progress Report" }
+                ],
+                featured: false
+            },
+            {
+                title: { ar: "الباقة الأكثر طلباً", en: "Popular Package" },
+                price: { ar: "٨ حصص", en: "8 Classes" },
+                priceSub: { ar: "شهرياً (حصتان أسبوعياً)", en: "Per Month (2 classes/week)" },
+                features: [
+                    { ar: "مدة الحصة: 45 دقيقة", en: "Class Duration: 45 mins" },
+                    { ar: "متابعة فردية خاصة ومكثفة", en: "Intensive 1-on-1 Session" },
+                    { ar: "خطة مخصصة للحفظ والمراجعة", en: "Custom Memorization Plan" },
+                    { ar: "تقرير دوري أسبوعي", en: "Weekly Progress Report" }
+                ],
+                badge: { ar: "الأكثر طلباً", en: "Most Popular" },
+                featured: true
+            },
+            {
+                title: { ar: "الباقة المكثفة", en: "Intensive Package" },
+                price: { ar: "١٢ حصة", en: "12 Classes" },
+                priceSub: { ar: "شهرياً (3 حصص أسبوعياً)", en: "Per Month (3 classes/week)" },
+                features: [
+                    { ar: "مدة الحصة: 45 دقيقة", en: "Class Duration: 45 mins" },
+                    { ar: "تثبيت الحفظ وإتقان التجويد", en: "Advanced Tajweed & Retention" },
+                    { ar: "أولوية اختيار المواعيد", en: "Priority Schedule Selection" },
+                    { ar: "متابعة مباشرة مستمرة", en: "Continuous Direct Support" }
+                ],
+                featured: false
             }
         ]
     },
@@ -125,34 +169,34 @@ const siteData = {
         ]
     },
 
-    // قسم نماذج التلاوات (Playlist)
+    // قسم نماذج التلاوات / الطلاب (3 أعمدة × 3 نماذج = 9 نماذج لأصوات مشايخ مؤقتاً)
     playlist: {
-        title: { ar: "نماذج من تلاوات الطلاب", en: "Famous Reciters Samples" },
-        subtitle: { ar: "استمع إلى نماذج لتلاوات مجودة بخامات صوتية متنوعة وأحكام إتقان ممتازة", en: "Listen to recitation samples from renowned reciters" },
-        tracks: [
+        title: { ar: "نماذج التلاوات الصوتية", en: "Quran Recitation Samples" },
+        subtitle: { ar: "نماذج تلاوة صوتية من طلابنا", en: "Audio recitation samples from our students" },
+        columns: [
             {
-                id: 1,
-                title: { ar: "الشيخ مشاري العفاسي (سورة الفاتحة)", en: "Sheikh Mishary Alafasy (Surah Al-Fatihah)" },
-                subtitle: { ar: "قراءة متميزة وتجويد متقن", en: "Excellent recitation & Tajweed" },
-                audioUrl: "https://server8.mp3quran.net/afs/001.mp3"
+                header: { ar: "نماذج تلاوات الطلاب", en: "Student Recitation Samples" },
+                tracks: [
+                    { id: 1, audioUrl: "https://server8.mp3quran.net/afs/001.mp3" },
+                    { id: 2, audioUrl: "https://server7.mp3quran.net/basit/001.mp3" },
+                    { id: 3, audioUrl: "https://server13.mp3quran.net/hssri/001.mp3" }
+                ]
             },
             {
-                id: 2,
-                title: { ar: "الشيخ عبد الباسط عبد الصمد (سورة الفاتحة)", en: "Sheikh Abdul Basit (Surah Al-Fatihah)" },
-                subtitle: { ar: "تلاوة خاشعة بالأسلوب المجود", en: "Mujawwad style recitation" },
-                audioUrl: "https://server7.mp3quran.net/basit/001.mp3"
+                header: { ar: "نماذج تلاوات الطلاب", en: "Student Recitation Samples" },
+                tracks: [
+                    { id: 4, audioUrl: "https://server10.mp3quran.net/minsh/001.mp3" },
+                    { id: 5, audioUrl: "https://server11.mp3quran.net/sds/001.mp3" },
+                    { id: 6, audioUrl: "https://server9.mp3quran.net/shur/001.mp3" }
+                ]
             },
             {
-                id: 3,
-                title: { ar: "الشيخ محمود خليل الحصري (سورة الفاتحة)", en: "Sheikh Al-Hussary (Surah Al-Fatihah)" },
-                subtitle: { ar: "المصحف المعلم ومخرج الحروف الدقيق", en: "Teaching Style & Accurate Pronunciation" },
-                audioUrl: "https://server13.mp3quran.net/hssri/001.mp3"
-            },
-            {
-                id: 4,
-                title: { ar: "الشيخ المنشاوي (سورة الفاتحة)", en: "Sheikh Al-Minshawi (Surah Al-Fatihah)" },
-                subtitle: { ar: "تلاوة مؤثرة وأحكام تجويد سليمة", en: "Emotional recitation with proper rules" },
-                audioUrl: "https://server10.mp3quran.net/minsh/001.mp3"
+                header: { ar: "نماذج تلاوات الطلاب", en: "Student Recitation Samples" },
+                tracks: [
+                    { id: 7, audioUrl: "https://server6.mp3quran.net/maher/001.mp3" },
+                    { id: 8, audioUrl: "https://server4.mp3quran.net/yasser/001.mp3" },
+                    { id: 9, audioUrl: "https://server12.mp3quran.net/ajm/001.mp3" }
+                ]
             }
         ]
     },
@@ -175,7 +219,7 @@ const siteData = {
             {
                 text: { ar: "«التزام بالوقت، ومرونة عالية، وبيئة هادئة ومريحة جداً أثناء الحصة. جزاكم الله خيراً على هذا المجهود الطيب.»", en: "«Punctual, flexible, and very comfortable learning atmosphere during sessions. May Allah reward you well.»" },
                 author: { ar: "مريم إبراهيم", en: "Mariam I." },
-                location: { ar: "طالبة إجازة - مصر", en: "Student - Egypt" }
+                location: { ar: "طالبة مراجعة - مصر", en: "Student - Egypt" }
             }
         ]
     },
@@ -269,7 +313,24 @@ function renderPage(lang) {
         </div>`
     ).join('');
 
-    // 7. Steps Section
+    // 7. Packages Section (باقات الحصص)
+    document.getElementById('packagesTitle').textContent = siteData.packages.title[lang];
+    document.getElementById('packagesSub').textContent = siteData.packages.subtitle[lang];
+    document.getElementById('packagesGrid').innerHTML = siteData.packages.items.map(pkg => 
+        `<div class="package-card ${pkg.featured ? 'featured' : ''}">
+            ${pkg.badge ? `<div class="package-badge">${pkg.badge[lang]}</div>` : ''}
+            <div>
+                <h4>${pkg.title[lang]}</h4>
+                <div class="package-price">${pkg.price[lang]}<br><span>${pkg.priceSub[lang]}</span></div>
+                <ul class="package-features">
+                    ${pkg.features.map(f => `<li><i class="fa-solid fa-circle-check"></i> <span>${f[lang]}</span></li>`).join('')}
+                </ul>
+            </div>
+            <a href="${waUrl}" target="_blank" class="btn-package">${lang === 'ar' ? 'اختر الباقة' : 'Choose Package'}</a>
+        </div>`
+    ).join('');
+
+    // 8. Steps Section
     document.getElementById('stepsTitle').textContent = siteData.steps.title[lang];
     document.getElementById('stepsSub').textContent = siteData.steps.subtitle[lang];
     document.getElementById('stepsGrid').innerHTML = siteData.steps.items.map(step => 
@@ -280,29 +341,27 @@ function renderPage(lang) {
         </div>`
     ).join('');
 
-    // 8. Playlist Section
+    // 9. Recitation / Student Playlist Section (3 أعمدة × 3 تسجيلات)
     document.getElementById('playlistTitle').textContent = siteData.playlist.title[lang];
     document.getElementById('playlistSub').textContent = siteData.playlist.subtitle[lang];
-    document.getElementById('playlistContainer').innerHTML = siteData.playlist.tracks.map(track => 
-        `<div class="audio-track-card">
-            <div class="track-info">
-                <div class="track-icon"><i class="fa-solid fa-book-open-reader"></i></div>
-                <div class="track-details">
-                    <h4>${track.title[lang]}</h4>
-                    <span>${track.subtitle[lang]}</span>
-                </div>
-            </div>
-            <div class="track-controls">
-                <button class="play-btn-small" onclick="playTrack(${track.id})"><i class="fa-solid fa-play" id="playIcon${track.id}"></i></button>
-                <div class="track-progress" onclick="seekTrack(event, ${track.id})">
-                    <div class="track-progress-fill" id="progressFill${track.id}"></div>
-                </div>
-            </div>
-            <audio id="audioTrack${track.id}" src="${track.audioUrl}"></audio>
+    document.getElementById('playlistColumnsGrid').innerHTML = siteData.playlist.columns.map(col => 
+        `<div class="playlist-column">
+            <div class="column-header">${col.header[lang]}</div>
+            ${col.tracks.map(track => 
+                `<div class="audio-track-card-compact">
+                    <button class="play-btn-compact" onclick="playTrack(${track.id})">
+                        <i class="fa-solid fa-play" id="playIcon${track.id}"></i>
+                    </button>
+                    <div class="track-progress-compact" onclick="seekTrack(event, ${track.id})">
+                        <div class="track-progress-fill-compact" id="progressFill${track.id}"></div>
+                    </div>
+                    <audio id="audioTrack${track.id}" src="${track.audioUrl}"></audio>
+                </div>`
+            ).join('')}
         </div>`
     ).join('');
 
-    // 9. Testimonials Section
+    // 10. Testimonials Section
     document.getElementById('testimonialsTitle').textContent = siteData.testimonials.title[lang];
     document.getElementById('testimonialsSub').textContent = siteData.testimonials.subtitle[lang];
     document.getElementById('testimonialsGrid').innerHTML = siteData.testimonials.items.map(item => 
@@ -320,7 +379,7 @@ function renderPage(lang) {
         </div>`
     ).join('');
 
-    // 10. FAQ Section
+    // 11. FAQ Section
     document.getElementById('faqTitle').textContent = siteData.faq.title[lang];
     document.getElementById('faqSub').textContent = siteData.faq.subtitle[lang];
     document.getElementById('faqAccordion').innerHTML = siteData.faq.items.map(item => 
@@ -335,7 +394,7 @@ function renderPage(lang) {
         </div>`
     ).join('');
 
-    // 11. Footer
+    // 12. Footer
     document.getElementById('footerCopyright').textContent = siteData.footer.copyright[lang];
     document.getElementById('footerWaText').textContent = `واتساب: ${siteData.contact.whatsappNumber}`;
     document.getElementById('footerTgText').textContent = siteData.footer.telegramBtn[lang];
