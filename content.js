@@ -74,7 +74,7 @@ const siteData = {
         ]
     },
 
-    // قسم البرامج التعليمية (Services)
+    // قسم البرامج التعليمية (Services - مع تعديل البرنامج الأخير لدورة تصحيح التلاوة وتجويد الحروف)
     services: {
         title: { ar: "برامجنا التعليمية", en: "Our Educational Programs" },
         subtitle: { ar: "خطط دراسية مخصصة تناسب كافة المستويات والأعمار", en: "Customized study plans designed for all ages and levels" },
@@ -169,13 +169,13 @@ const siteData = {
         ]
     },
 
-    // قسم نماذج التلاوات / الطلاب
+    // قسم نماذج التلاوات / الطلاب (3 أعمدة × 3 نماذج = 9 نماذج لأصوات مشايخ مؤقتاً)
     playlist: {
         title: { ar: "نماذج التلاوات الصوتية", en: "Quran Recitation Samples" },
-        subtitle: { ar: "نماذج تلاوة صوتية من طلابنا", en: "Audio recitation samples from our students" },
+        subtitle: { ar: "نماذج صوتية مختارة لأصوات مشايخ وقراء معتمدة (سيتم إضافة تسجيلات الطالبات قريباً)", en: "Selected sample audio tracks (Student records will be added soon)" },
         columns: [
             {
-                header: { ar: "نماذج تلاوات الطلاب", en: "Student Recitation Samples" },
+                header: { ar: "العمود الأول: التلاوات المرتلة", en: "Column 1: Murattal Recitations" },
                 tracks: [
                     { id: 1, audioUrl: "https://server8.mp3quran.net/afs/001.mp3" },
                     { id: 2, audioUrl: "https://server7.mp3quran.net/basit/001.mp3" },
@@ -183,7 +183,7 @@ const siteData = {
                 ]
             },
             {
-                header: { ar: "نماذج تلاوات الطلاب", en: "Student Recitation Samples" },
+                header: { ar: "العمود الثاني: التلاوات المجودة", en: "Column 2: Mujawwad Recitations" },
                 tracks: [
                     { id: 4, audioUrl: "https://server10.mp3quran.net/minsh/001.mp3" },
                     { id: 5, audioUrl: "https://server11.mp3quran.net/sds/001.mp3" },
@@ -191,7 +191,7 @@ const siteData = {
                 ]
             },
             {
-                header: { ar: "نماذج تلاوات الطلاب", en: "Student Recitation Samples" },
+                header: { ar: "العمود الثالث: أصوات خاشعة", en: "Column 3: Emotional Recitations" },
                 tracks: [
                     { id: 7, audioUrl: "https://server6.mp3quran.net/maher/001.mp3" },
                     { id: 8, audioUrl: "https://server4.mp3quran.net/yasser/001.mp3" },
@@ -231,7 +231,7 @@ const siteData = {
         items: [
             {
                 q: { ar: "كيف يتم إجراء الحصص أونلاين؟", en: "How are online classes conducted?" },
-                a: { ar: "تتم الحصص عبر تطبيق Zoom أو Telegram بصوت واضح والجلسات فردية خاصة لضمان التركيز والسرية.", en: "Classes are conducted via Zoom or Telegram in private 1-on-1 audio/video sessions ensuring high focus and privacy." }
+                a: { ar: "تتم الحصص عبر تطبيق Zoom أو Telegram بصوت واضح وجلسات فردية خاصة لضمان التركيز والسرية.", en: "Classes are conducted via Zoom or Telegram in private 1-on-1 audio/video sessions ensuring high focus and privacy." }
             },
             {
                 q: { ar: "ما هي طرق الدفع المتاحة داخل وخارج مصر؟", en: "What payment methods are supported?" },
@@ -248,7 +248,7 @@ const siteData = {
 };
 
 /* ==========================================================================
-   منطق بناء وتحديث الصفحة ديناميكياً ودعم نظام التعليقات التفاعلي المحلي
+   منطق بناء وتحديث الصفحة ديناميكياً (Dynamic Rendering Engine)
    ========================================================================== */
 
 let currentLang = 'ar';
@@ -341,7 +341,7 @@ function renderPage(lang) {
         </div>`
     ).join('');
 
-    // 9. Recitation / Student Playlist Section
+    // 9. Recitation / Student Playlist Section (3 أعمدة × 3 تسجيلات)
     document.getElementById('playlistTitle').textContent = siteData.playlist.title[lang];
     document.getElementById('playlistSub').textContent = siteData.playlist.subtitle[lang];
     document.getElementById('playlistColumnsGrid').innerHTML = siteData.playlist.columns.map(col => 
@@ -379,15 +379,6 @@ function renderPage(lang) {
         </div>`
     ).join('');
 
-    // تحديث نصوص قسم التعليقات المباشرة بناءً على اللغة
-    document.getElementById('commentsHeaderTitle').textContent = (lang === 'ar') ? "أضف رأيك أو تعليقك بالموقع" : "Add Your Review or Comment";
-    document.getElementById('commenterName').placeholder = (lang === 'ar') ? "اكتب اسمك الكريم..." : "Enter your name...";
-    document.getElementById('commenterText').placeholder = (lang === 'ar') ? "اكتب تعليقك أو انطباعك عن المنصة هنا..." : "Write your comment or review here...";
-    document.getElementById('commentSubmitBtn').textContent = (lang === 'ar') ? "إرسال التعليق" : "Submit Comment";
-
-    // إعادة عرض التعليقات لتلائم الاتجاه (RTL/LTR)
-    renderUserComments();
-
     // 11. FAQ Section
     document.getElementById('faqTitle').textContent = siteData.faq.title[lang];
     document.getElementById('faqSub').textContent = siteData.faq.subtitle[lang];
@@ -412,82 +403,6 @@ function renderPage(lang) {
 // تبديل اللغة عند الضغط على الزر
 function toggleLanguage() {
     renderPage(currentLang === 'ar' ? 'en' : 'ar');
-}
-
-/* ==========================================================================
-   نظام التعليقات المحلي التفاعلي (Interactive Comments Handler)
-   ========================================================================== */
-
-function getStoredComments() {
-    try {
-        const saved = localStorage.getItem('tahfeez_user_comments');
-        return saved ? JSON.parse(saved) : [
-            {
-                name: "أمينة محمد",
-                text: "منصة رائعة جداً، جزاكم الله خيراً على الاهتمام بتصحيح التلاوة للأطفال.",
-                date: "2026-09-20"
-            }
-        ];
-    } catch(e) {
-        return [];
-    }
-}
-
-function renderUserComments() {
-    const comments = getStoredComments();
-    const commentsListContainer = document.getElementById('userCommentsList');
-    
-    if(!commentsListContainer) return;
-
-    if(comments.length === 0) {
-        commentsListContainer.innerHTML = `<p style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">${currentLang === 'ar' ? 'لا توجد تعليقات بعد. كن أول من يضيف تعليقاً!' : 'No comments yet. Be the first to comment!'}</p>`;
-        return;
-    }
-
-    commentsListContainer.innerHTML = comments.map(c => `
-        <div class="user-comment-card" dir="${currentLang === 'ar' ? 'rtl' : 'ltr'}">
-            <div class="user-comment-header">
-                <span class="user-comment-name"><i class="fa-solid fa-circle-user" style="color: var(--gold-primary); margin-${currentLang === 'ar' ? 'left' : 'right'}: 6px;"></i> ${escapeHtml(c.name)}</span>
-                <span class="user-comment-date">${c.date}</span>
-            </div>
-            <div class="user-comment-body">${escapeHtml(c.text)}</div>
-        </div>
-    `).join('');
-}
-
-function handleNewComment(e) {
-    e.preventDefault();
-    const nameInput = document.getElementById('commenterName');
-    const textInput = document.getElementById('commenterText');
-
-    const nameVal = nameInput.value.trim();
-    const textVal = textInput.value.trim();
-
-    if(!nameVal || !textVal) return;
-
-    const newComment = {
-        name: nameVal,
-        text: textVal,
-        date: new Date().toISOString().split('T')[0]
-    };
-
-    const comments = getStoredComments();
-    comments.unshift(newComment); // إضافة التعليق الجديد في المقدمة
-
-    try {
-        localStorage.setItem('tahfeez_user_comments', JSON.stringify(comments));
-    } catch(err) {
-        console.error(err);
-    }
-
-    nameInput.value = '';
-    textInput.value = '';
-
-    renderUserComments();
-}
-
-function escapeHtml(str) {
-    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
 }
 
 /* ==========================================================================
