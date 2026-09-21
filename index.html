@@ -70,17 +70,17 @@
             background-repeat: repeat;
         }
 
-        /* Static Background Watermark */
+        /* Static Background Watermark - محسّن ليظهر بشكل أكثر وضوحاً */
         .background-watermark {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             font-family: var(--font-arabic-heading);
-            font-size: min(12vw, 110px);
-            font-weight: 700;
+            font-size: min(15vw, 140px);
+            font-weight: 800;
             color: transparent;
-            -webkit-text-stroke: 1.5px rgba(212, 175, 55, 0.12);
+            -webkit-text-stroke: 2.5px rgba(212, 175, 55, 0.22);
             text-align: center;
             white-space: nowrap;
             pointer-events: none;
@@ -543,7 +543,7 @@
         }
 
         /* ==========================================
-           7. STUDENT / RECITATION SAMPLES SECTION (3 أعمدة × 3 نماذج = 9 نماذج صوتية)
+           7. STUDENT / RECITATION SAMPLES SECTION
         ========================================== */
         .playlist-columns-grid {
             display: grid;
@@ -625,7 +625,7 @@
         }
 
         /* ==========================================
-           8. TESTIMONIALS SECTION
+           8. TESTIMONIALS & INTERACTIVE COMMENTS SECTION
         ========================================== */
         .testimonial-card {
             background: var(--glass-bg);
@@ -662,6 +662,106 @@
         .author-info span {
             color: var(--text-muted);
             font-size: 0.8rem;
+        }
+
+        /* تنسيق قسم إضافة وتعديل التعليقات المباشرة */
+        .comments-section-container {
+            max-width: 800px;
+            margin: 40px auto 0 auto;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(12px);
+        }
+
+        .comments-section-container h4 {
+            font-family: var(--font-arabic-heading);
+            color: var(--gold-light);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .comment-form input, 
+        .comment-form textarea {
+            width: 100%;
+            padding: 12px 18px;
+            background: rgba(2, 44, 34, 0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-light);
+            font-family: inherit;
+            font-size: 0.95krem;
+        }
+
+        .comment-form input:focus, 
+        .comment-form textarea:focus {
+            outline: none;
+            border-color: var(--gold-primary);
+        }
+
+        .btn-submit-comment {
+            background: var(--gold-primary);
+            color: var(--secondary-navy);
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            align-self: flex-end;
+        }
+
+        .btn-submit-comment:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .user-comment-card {
+            background: rgba(2, 44, 34, 0.5);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            padding: 15px 20px;
+        }
+
+        .user-comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .user-comment-name {
+            font-weight: 700;
+            color: var(--gold-light);
+            font-size: 0.95rem;
+        }
+
+        .user-comment-date {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .user-comment-body {
+            color: var(--text-light);
+            font-size: 0.9rem;
         }
 
         /* ==========================================
@@ -783,7 +883,7 @@
     <!-- Islamic Decorative Ambient Background -->
     <div class="pattern-overlay"></div>
 
-    <!-- Static Background Watermark Text -->
+    <!-- Static Background Watermark Text - اسم الموقع في الخلفية -->
     <div class="background-watermark" id="bgWatermark"></div>
 
     <!-- HEADER / NAVIGATION -->
@@ -879,7 +979,7 @@
         </div>
     </section>
 
-    <!-- RECITATION / STUDENT SAMPLES SECTION (3 أعمدة × 3 نماذج صوتية) -->
+    <!-- RECITATION / STUDENT SAMPLES SECTION -->
     <section class="section-padding" id="playlist" style="background: rgba(6, 78, 59, 0.1);">
         <div class="container">
             <div class="section-title">
@@ -890,21 +990,30 @@
         </div>
     </section>
 
-    <!-- TESTIMONIALS SECTION -->
+    <!-- TESTIMONIALS & INTERACTIVE COMMENTS SECTION -->
     <section class="section-padding" id="testimonials">
         <div class="container">
             <div class="section-title">
                 <h3 id="testimonialsTitle"></h3>
                 <p id="testimonialsSub"></p>
             </div>
-            <script src="https://utteranc.es/client.js"
-        repo="[shehabytb-spec/tahfeez-online]"
-        issue-term="pathname"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-</script>
-            <div class="cards-grid" id="testimonialsGrid"></div>
+            
+            <div class="cards-grid" id="testimonialsGrid" style="margin-bottom: 40px;"></div>
+
+            <!-- قسم إضافة تعليق زائر جديد ديناميكياً -->
+            <div class="comments-section-container">
+                <h4 id="commentsHeaderTitle">أضف رأيك أو تعليقك بالموقع</h4>
+                <form class="comment-form" id="userCommentForm" onsubmit="handleNewComment(event)">
+                    <input type="text" id="commenterName" placeholder="اكتب اسمك الكريم..." required>
+                    <textarea id="commenterText" rows="3" placeholder="اكتب تعليقك أو انطباعك عن المنصة هنا..." required></textarea>
+                    <button type="submit" class="btn-submit-comment" id="commentSubmitBtn">إرسال التعليق</button>
+                </form>
+                
+                <!-- قائمة عرض التعليقات المضافة -->
+                <div class="comments-list" id="userCommentsList">
+                    <!-- سيتم تعبئتها تلقائياً عبر الجافاسكريبت -->
+                </div>
+            </div>
         </div>
     </section>
 
